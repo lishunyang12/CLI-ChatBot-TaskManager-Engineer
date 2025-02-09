@@ -7,6 +7,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -23,3 +27,4 @@ public class Task {
         isDone = false;
     }
 }
+
