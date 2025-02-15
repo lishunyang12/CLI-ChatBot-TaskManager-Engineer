@@ -1,5 +1,5 @@
 public class TextDivider {
-    public String[] deadline_divider(String[] words){
+    public String[] divideDeadline(String[] words){
         String inputTaskDeadline = "";
         String by = "";
         String[] textString = new String[2];
@@ -24,7 +24,7 @@ public class TextDivider {
         return textString;
     }
 
-    public String[] event_divider(String[] words){
+    public String[] divideEvent(String[] words){
         String inputTaskEvents = "";
         String from = "";
         String to = "";

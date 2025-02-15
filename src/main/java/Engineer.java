@@ -1,15 +1,18 @@
 import java.util.Scanner;
 
+
 public class Engineer {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         TaskManager myTaskManager = new TaskManager();
         ChatBotManager myChatBotManager = new ChatBotManager();
         TextDivider myTextDivider = new TextDivider();
-        myChatBotManager.sayHello();
+
+        Scanner scanner = new Scanner(System.in);
         String inputMessage = scanner.nextLine(); // read input
+
+        myChatBotManager.sayHello();
+
         boolean isKeepAsking = true;
-        // echo
         do {
             String[] words = inputMessage.split(" ");
             String firstWord = words[0];
@@ -38,13 +41,13 @@ public class Engineer {
                     myTaskManager.addTask(inputTaskTodo);
                     break;
                 case "deadline":
-                    String[] textStringDeadline = myTextDivider.deadline_divider(words);;
+                    String[] textStringDeadline = myTextDivider.divideDeadline(words);;
                     String inputTaskDeadline = textStringDeadline[0];
                     String by = textStringDeadline[1];
                     myTaskManager.addTask(inputTaskDeadline, by);
                     break;
                 case "event":
-                    String[] textStringEvent = myTextDivider.event_divider(words);
+                    String[] textStringEvent = myTextDivider.divideEvent(words);
                     String inputTaskEvents = textStringEvent[0];
                     String from = textStringEvent[1];
                     String to = textStringEvent[2];
@@ -56,8 +59,10 @@ public class Engineer {
             } else {
                 myChatBotManager.askForNonEmptyValue();
             }
+
         inputMessage = scanner.nextLine();
         } while(isKeepAsking);
+
         scanner.close();  // stop receiving input
     }
 }
