@@ -1,4 +1,5 @@
 package engineer;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import engineer.exception.EngineerException;
 import engineer.task.*;
@@ -28,11 +29,14 @@ public class Engineer {
             case "unmark":
                 if (words.length == 1) {
                     throw new EngineerException(myChatBotManager.askForID());
-                } else if (words.length == 2) {
-                    myTaskManager.changeTaskStatus(words);
-                } else {
-                    throw new EngineerException(myChatBotManager.askForValidTask());
                 }
+                myTaskManager.changeTaskStatus(words);
+                break;
+            case "delete":
+                if (words.length == 1) {
+                    throw new EngineerException((myChatBotManager.askForID()));
+                }
+                myTaskManager.removeTask(words);
                 break;
             case "list":
                 // print out all tasks
@@ -79,6 +83,10 @@ public class Engineer {
             printResponse();
         } catch (EngineerException e) {
             System.out.println(e.getMessage());
+        } catch(NumberFormatException e) {
+            System.out.println("Please enter a valid number");
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("Index Out of Bound!");
         }
         scanner.close();  // stop receiving input
     }

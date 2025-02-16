@@ -1,9 +1,10 @@
 package engineer.task;
 import engineer.command.ChatBotManager;
 
+import java.util.ArrayList;
+
 public class TaskManager {
-    protected static final int MAX_NUM = 100;
-    protected Task[] taskList;
+    protected ArrayList<Task> taskList;
     static protected int taskCount;
 
     ChatBotManager myChatBotManager = new ChatBotManager();
@@ -11,41 +12,29 @@ public class TaskManager {
 
     // constructor
     public TaskManager() {
+        taskList = new ArrayList<>();
         this.taskCount = 0;
-        this.taskList = new Task[MAX_NUM];
     }
 
     // method to be overloaded
     public void addTask(String inputTask) {
-        if(taskCount == 100) {
-            myChatBotManager.earnFullList();
-            return;
-        }
-        taskList[taskCount] = new ToDos(inputTask);
-        myChatBotManager.addNewTask(taskList[taskCount], taskCount);
-        taskCount++;
+        taskList.add(new ToDos(inputTask));
+        myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
+        taskCount = taskList.size();
     }
 
     // For todo task
     public void addTask(String inputTask, String by) {
-        if(taskCount == 100) {
-            myChatBotManager.earnFullList();
-            return;
-        }
-        taskList[taskCount] = new Deadline(inputTask, by);
-        myChatBotManager.addNewTask(taskList[taskCount], taskCount);
-        taskCount++;
+        taskList.add(new Deadline(inputTask, by));
+        myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
+        taskCount = taskList.size();
     }
 
     // For deadline task
     public void addTask(String inputTask, String from, String to) {
-        if(taskCount == 100) {
-            myChatBotManager.earnFullList();
-            return;
-        }
-        taskList[taskCount] = new Events(inputTask, from, to);
-        myChatBotManager.addNewTask(taskList[taskCount], taskCount);
-        taskCount++;
+        taskList.add(new Events(inputTask, from, to));
+        myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
+        taskCount = taskList.size();
     }
 
     public void listAllTasks() {
@@ -61,24 +50,31 @@ public class TaskManager {
         String listIdString = words[1];
 
         int listIndex = Integer.parseInt(listIdString) - 1;
-        if(listIndex < 0 | listIndex >= taskCount) {
-            myChatBotManager.askForValidID();
-            return;
-        }
 
         // execute and show result as required
         System.out.println(partition_line);
         if(command.equals("mark")) {
-            taskList[listIndex].markAsDone();
+            taskList.get(listIndex).markAsDone();
             System.out.println(myChatBotManager.textIndent("Nice! I've marked this task as done:"));
         } else {
-            taskList[listIndex].markAsUndone();
+            taskList.get(listIndex).markAsUndone();
             System.out.println(myChatBotManager.textIndent("Ok, I've marked this task as not done yet:"));
         }
-        String Icon = taskList[listIndex].getStatusIcon();
-        String description = taskList[listIndex].getDescription();
-        System.out.println(myChatBotManager.textIndent(taskList[listIndex].toString()));
+        String Icon = taskList.get(listIndex).getStatusIcon();
+        String description = taskList.get(listIndex).getDescription();
+        System.out.println(myChatBotManager.textIndent(taskList.get(listIndex).toString()));
         System.out.println(partition_line);
     }
 
+    public void removeTask(String[] words) {
+        if(taskCount == 0) {
+            myChatBotManager.emptyList();
+            return;
+        }
+        String listIdString = words[1];
+        int listIndex = Integer.parseInt(listIdString) - 1;
+        Task removedTask = taskList.remove(listIndex);
+        taskCount = taskList.size();
+        myChatBotManager.removeTask(removedTask, taskCount);
+    }
 }
