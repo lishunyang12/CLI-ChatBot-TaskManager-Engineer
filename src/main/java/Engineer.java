@@ -1,20 +1,19 @@
 import java.util.Scanner;
 
 public class Engineer {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        TaskManager myTaskManager = new TaskManager();
-        ChatBotManager myChatBotManager = new ChatBotManager();
-        TextDivider myTextDivider = new TextDivider();
-        myChatBotManager.sayHello();
+    static Scanner scanner = new Scanner(System.in);
+    static TaskManager myTaskManager = new TaskManager();
+    static ChatBotManager myChatBotManager = new ChatBotManager();
+    static TextDivider myTextDivider = new TextDivider();
+
+    public static void printResponse() throws EngineerException{
         boolean isKeepAsking = true;
         do {
             String inputMessage = scanner.nextLine(); // read input
             String[] words = inputMessage.split(" ");
             String firstWord = words[0];
             if (inputMessage.isEmpty()) {
-                myChatBotManager.askForNonEmptyValue();
-                continue;
+                throw new EngineerException(myChatBotManager.askForNonEmptyValue());
             }
             switch(firstWord) {
             case "bye":
@@ -24,11 +23,11 @@ public class Engineer {
             case "mark":
             case "unmark":
                 if (words.length == 1) {
-                    myChatBotManager.askForID();
+                    throw new EngineerException(myChatBotManager.askForID());
                 } else if (words.length == 2) {
                     myTaskManager.changeTaskStatus(words);
                 } else {
-                    myChatBotManager.askForValidTask();
+                    throw new EngineerException(myChatBotManager.askForValidTask());
                 }
                 break;
             case "list":
@@ -36,16 +35,28 @@ public class Engineer {
                 myTaskManager.listAllTasks();
                 break;
             case "todo":
-                String inputTaskTodo = words[1] + " " + words[2];
+                if (words.length == 1) {
+                    throw new EngineerException(myChatBotManager.askForNonEmptyTask());
+                }
+                String inputTaskTodo = "";
+                for(String word: words) {
+                    inputTaskTodo += (word + " ");
+                }
                 myTaskManager.addTask(inputTaskTodo);
                 break;
             case "deadline":
+                if (words.length == 1) {
+                    throw new EngineerException(myChatBotManager.askForNonEmptyTask());
+                }
                 String[] textStringDeadline = myTextDivider.divideDeadline(words);;
                 String inputTaskDeadline = textStringDeadline[0];
                 String by = textStringDeadline[1];
                 myTaskManager.addTask(inputTaskDeadline, by);
                 break;
             case "event":
+                if (words.length == 1) {
+                    throw new EngineerException(myChatBotManager.askForNonEmptyTask());
+                }
                 String[] textStringEvent = myTextDivider.divideEvent(words);
                 String inputTaskEvents = textStringEvent[0];
                 String from = textStringEvent[1];
@@ -53,9 +64,18 @@ public class Engineer {
                 myTaskManager.addTask(inputTaskEvents, from, to);
                 break;
             default:
-                myChatBotManager.askForValidTask();
+                throw new EngineerException(myChatBotManager.askForValidTask());
             }
         } while(isKeepAsking);
+    }
+
+    public static void main(String[] args) {
+        myChatBotManager.sayHello();
+        try {
+            printResponse();
+        } catch (EngineerException e) {
+            System.out.println(e.getMessage());
+        }
         scanner.close();  // stop receiving input
     }
 }
