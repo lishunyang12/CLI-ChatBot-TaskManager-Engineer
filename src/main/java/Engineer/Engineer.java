@@ -1,4 +1,8 @@
+package engineer;
 import java.util.Scanner;
+import engineer.exception.EngineerException;
+import engineer.task.*;
+import engineer.command.*;
 
 public class Engineer {
     static Scanner scanner = new Scanner(System.in);

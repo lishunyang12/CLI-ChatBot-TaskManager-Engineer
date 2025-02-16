@@ -1,3 +1,4 @@
+package engineer.command;
 public class TextDivider {
     public String[] divideDeadline(String[] words){
         String inputTaskDeadline = "";

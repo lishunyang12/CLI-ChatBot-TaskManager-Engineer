@@ -1,3 +1,6 @@
+package engineer.task;
+import engineer.command.ChatBotManager;
+
 public class TaskManager {
     protected static final int MAX_NUM = 100;
     protected Task[] taskList;
