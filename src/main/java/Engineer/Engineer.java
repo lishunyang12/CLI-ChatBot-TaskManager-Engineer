@@ -1,11 +1,11 @@
 package engineer;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import engineer.exception.EngineerException;
 import engineer.task.*;
 import engineer.command.*;
 
 public class Engineer {
+
     static Scanner scanner = new Scanner(System.in);
     static TaskManager myTaskManager = new TaskManager();
     static ChatBotManager myChatBotManager = new ChatBotManager();
