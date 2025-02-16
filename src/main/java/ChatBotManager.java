@@ -43,20 +43,24 @@ public class ChatBotManager {
         sandwichByLine(textIndent("Bye. Hope to see you again soon!"));
     }
 
-    public void askForID() {
-        System.out.println(textIndent("please enter a Task ID." ));
+    public String askForID() {
+       return textIndent("please enter a Task ID." );
     }
 
-    public void askForValidID() {
-        System.out.println(textIndent("please enter a valid ID." ));
+    public String askForValidID() {
+        return textIndent("please enter a valid ID." );
     }
 
-    public void askForValidTask() {
-        System.out.println(textIndent("please enter a valid task." ));
+    public String askForValidTask() {
+        return textIndent("please enter a valid task." );
     }
 
-    public void askForNonEmptyValue() {
-        System.out.println(textIndent("please enter a non-empty value." ));
+    public String askForNonEmptyTask() {
+        return textIndent("please enter a task." );
+    }
+
+    public String askForNonEmptyValue() {
+        return textIndent("please enter a non-empty value.");
     }
 
     public void earnFullList() {
