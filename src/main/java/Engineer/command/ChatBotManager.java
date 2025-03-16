@@ -1,5 +1,5 @@
-package engineer.command;
-import engineer.task.*;
+package Engineer.command;
+import Engineer.task.*;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class ChatBotManager {
     }
 
     public String askForValidTask() {
-        return textIndent("please enter a valid task." );
+        return textIndent("please enter a valid task type name." );
     }
 
     public String askForNonEmptyTask() {

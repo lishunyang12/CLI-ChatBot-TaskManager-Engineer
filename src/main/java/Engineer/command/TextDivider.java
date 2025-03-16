@@ -1,27 +1,35 @@
-package engineer.command;
+package Engineer.command;
+import Engineer.command.parseDate;
+
 public class TextDivider {
+    parseDate dateParser = new parseDate();
     public String[] divideDeadline(String[] words){
         String inputTaskDeadline = "";
-        String by = "";
         String[] textString = new String[2];
-        int separationIndex = 0;
+        int separationIndex = -1;
+        // find /by positioin
         for(int i = 0; i < words.length; i++) {
             if(words[i].equals("/by")) {
                 separationIndex = i;
+                break;
             }
+        }
+
+        if(separationIndex == -1) {
+            throw new IllegalArgumentException("Error: '/by not found in input");
         }
         for(int i = 1; i < separationIndex; i++) {
             inputTaskDeadline += words[i] + " ";
         }
-        for(int i = separationIndex+1; i < words.length; i++) {
-            if(i == words.length-1) {
-                by += words[i];
-            } else {
-                by += words[i] + " ";
-            }
+
+        String dateInput = words[separationIndex+1];
+        if(separationIndex+2 != words.length) {
+            dateInput += " " + words[separationIndex+2];
         }
+
+        String formattedDate = dateParser.parseDateInput(dateInput);
         textString[0] = inputTaskDeadline;
-        textString[1] = by;
+        textString[1] = formattedDate;
         return textString;
     }
 
@@ -48,16 +56,17 @@ public class TextDivider {
             from += words[i] + " ";
         }
         for(int i = secondDivisionIndex+1; i < words.length; i++) {
-            if(i == words.length-1) {
-                to += words[i];
-            } else {
-                to += words[i] + " ";
-            }
+            to += words[i] + " ";
         }
+        //trim spaces in the end
+        from = from.trim();
+        to = to.trim();
+
+        String formattedDateFrom = dateParser.parseDateInput(from);
+        String formattedDateTo = dateParser.parseDateInput(to);
         textString[0] = inputTaskEvents;
-        textString[1] = from;
-        textString[2] = to;
+        textString[1] = formattedDateFrom;
+        textString[2] = formattedDateTo;
         return textString;
     }
-
 }

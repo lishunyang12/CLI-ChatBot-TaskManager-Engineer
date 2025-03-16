@@ -1,4 +1,4 @@
-package engineer.task;
+package Engineer.task;
 public class Events extends Task {
     protected String from;
     protected String to;
@@ -11,7 +11,7 @@ public class Events extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from + "to: " + to + ")";
+        return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
     }
 
     @Override
