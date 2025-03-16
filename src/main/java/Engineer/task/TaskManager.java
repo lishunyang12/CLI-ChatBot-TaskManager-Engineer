@@ -52,6 +52,8 @@ public class TaskManager {
        myChatBotManager.printAllTask(taskList, taskCount);
     }
 
+    public void listAllMatchingTasks(String keyword) { myChatBotManager.printAllMatchingTask(taskList, keyword);}
+
     public void changeTaskStatus(String[] words) {
         if(taskCount == 0) {
             myChatBotManager.emptyList();

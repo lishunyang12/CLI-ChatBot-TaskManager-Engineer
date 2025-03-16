@@ -4,6 +4,11 @@ import Engineer.exception.EngineerException;
 import Engineer.task.*;
 import Engineer.command.*;
 
+
+/**
+ * The main class for the Engineer application.
+ * This class handles user input and delegates tasks to the appropriate managers.
+ */
 public class Engineer {
 
     static Scanner scanner = new Scanner(System.in);
@@ -11,6 +16,12 @@ public class Engineer {
     static ChatBotManager myChatBotManager = new ChatBotManager();
     static TextDivider myTextDivider = new TextDivider();
 
+    /**
+     * Prints responses based on user input and handles task management.
+     * Continuously reads user input until the "bye" command is received.
+     *
+     * @throws EngineerException If the input is invalid or an error occurs.
+     */
     public static void printResponse() throws EngineerException{
         boolean isKeepAsking = true;
         do {
@@ -71,12 +82,25 @@ public class Engineer {
                 String to = textStringEvent[2];
                 myTaskManager.addTask(inputTaskEvents, from, to);
                 break;
+            case "find":
+                if(words.length == 1) {
+                    throw new EngineerException(myChatBotManager.askForNonEmptyTask());
+                }
+                String keyword = words[1];
+                myTaskManager.listAllMatchingTasks(keyword);
+                break;
             default:
                 throw new EngineerException(myChatBotManager.askForValidTask());
             }
         } while(isKeepAsking);
     }
 
+    /**
+     * The main method that starts the Engineer application.
+     * Initializes the chatbot and handles user input.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         myChatBotManager.sayHello();
         try {
