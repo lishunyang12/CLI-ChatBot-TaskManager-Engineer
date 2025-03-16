@@ -1,5 +1,5 @@
-package engineer.task;
-import engineer.command.ChatBotManager;
+package Engineer.task;
+import Engineer.command.ChatBotManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class TaskManager {
         loadTasks();
     }
 
-    // method to be overloaded
+    // For todo task
     public void addTask(String inputTask) {
         taskList.add(new ToDos(inputTask));
         myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
@@ -32,7 +32,7 @@ public class TaskManager {
         saveTasks();
     }
 
-    // For todo task
+    // For deadline task
     public void addTask(String inputTask, String by) {
         taskList.add(new Deadline(inputTask, by));
         myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
@@ -40,7 +40,7 @@ public class TaskManager {
         saveTasks();
     }
 
-    // For deadline task
+    // For event task
     public void addTask(String inputTask, String from, String to) {
         taskList.add(new Events(inputTask, from, to));
         myChatBotManager.addNewTask(taskList.get(taskCount), taskCount);
@@ -51,6 +51,8 @@ public class TaskManager {
     public void listAllTasks() {
        myChatBotManager.printAllTask(taskList, taskCount);
     }
+
+    public void listAllMatchingTasks(String keyword) { myChatBotManager.printAllMatchingTask(taskList, keyword);}
 
     public void changeTaskStatus(String[] words) {
         if(taskCount == 0) {
