@@ -1,160 +1,106 @@
 # Engineer User Guide
 
-Engineer is a Personal Assistant Chatbot that acts as a task manager to
-helps users keep track of their tasks via a command line interface (CLI).
+Engineer is a Personal Assistant Chatbot that helps users manage tasks through a command line interface (CLI).
 
-## Adding ToDos
+*Acknowledgement: This guide was adapted from the work of Thomas Chiu ([GitHub: paklongchiu/ip](https://github.com/paklongchiu/ip))*
 
-This feature allows users to add and track tasks that are without any date/time 
-attached to it, e.g., visit a museum, which are represented by the symbol "T".
+## Table of Contents
+1. [Task Types](#task-types)
+2. [Task Management](#task-management)
+3. [Task Viewing](#task-viewing)
+4. [Exiting the Program](#exiting-the-program)
 
-Input format: `todo <task description>`
+## Task Types
 
-Example: `todo visit a museum`
+Engineer supports three types of tasks:
 
-Expected output:
+### 1. ToDos (`T`)
+Simple tasks without specific dates/times.
 
-```
-Got it. I've added this task:
-  [T][ ] visit a museum
-Now you have 5 tasks in the list.
-```
+**Format:** `todo <description>`  
+**Example Input:**  
+`todo buy groceries`
 
-## Adding Deadlines
-
-This feature allows users to add and track tasks that need to be done before a
-specific date/time, e.g., finish proposal by 04/06/2025 9pm, which are represented 
-by the symbol "D".
-
-Input format: `deadline <task description> /by <deadline>`
-
-Example: `deadline finish proposal /by 04/06/2025 9pm`
-
-Expected output:
-
-```
-Got it. I've added this task:
-  [D][ ] finish proposal (by: 04/06/2025 9pm)
+**Example Output:**  
+Got it. I've added this task:  
+[T][ ] buy groceries  
 Now you have 3 tasks in the list.
-```
 
-## Adding Events
+### 2. Deadlines (`D`)
+Tasks with a due date/time.
 
-This feature allows users to add and track tasks that start at a specific date/time
-and ends at a specific date/time, e.g., basketball training 3-6pm, which are represented 
-by the symbol "E".
+**Format:** `deadline <description> /by <deadline>`  
+**Example Input:**  
+`deadline submit report /by 15/11/2023 5pm`
 
-Input format: `event <task description> /from <start time> /to <end time>`
-
-Example: `event basketball training /from 3pm /to 6pm`
-
-Expected output:
-
-```
-Got it. I've added this task:
-  [E][ ] basketball training (from: 3pm to: 6pm)
-Now you have 7 tasks in the list.
-```
-
-## Listing tasks
-
-This feature allows users to view all the tasks that have been stored by Elyk.
-
-Input format: `list`
-
-Example: `list`
-
-Expected output:
-
-```
-Here are the tasks in your list:
-1.[T][X] visit a museum
-2.[D][ ] finish proposal (by: 04/06/2025 9pm)
-3.[E][ ] basketball training (from: 3pm to: 6pm)
-4.[T][X] eat dinner
-5.[T][ ] fitness exercises
-```
-
-## Marking tasks as Done
-
-This feature allows users to mark tasks as done, which are represented 
-by the symbol "X".
-
-Input format: `mark <task index>`
-
-Example: `mark 3`
-
-Expected output:
-
-```
-Nice! I've marked this task as done:
-  [E][X] basketball training (from: 3pm to: 6pm)
-```
-
-## Marking tasks as Not Done
-
-This feature allows users to mark tasks as done, which are represented
-by the symbol " ".
-
-Input format: `unmark <task index>`
-
-Example: `unmark 1`
-
-Expected output:
-
-```
-OK, I've marked this task as not done yet:
-  [T][ ] visit a museum
-```
-
-## Deleting tasks
-
-This feature allows users to delete tasks that have been stored by Elyk.
-
-Input format: `delete <task index>`
-
-Example: `delete 2`
-
-Expected output:
-
-```
-Noted. I've removed this task:
-  [D][ ] finish proposal (by: 04/06/2025 9pm)
+**Example Output:**  
+Got it. I've added this task:  
+[D][ ] submit report (by: 15/11/2023 5pm)  
 Now you have 4 tasks in the list.
-```
 
-## Finding tasks
+### 3. Events (`E`)
+Tasks with start and end times.
 
-This feature allows users to search for tasks that contain a certain keyword 
-in the description.
+**Format:** `event <description> /from <start> /to <end>`  
+**Example Input:**  
+`event team meeting /from 10am /to 11am`
 
-Input format: `find <keyword>`
+**Example Output:**  
+Got it. I've added this task:  
+[E][ ] team meeting (from: 10am to: 11am)  
+Now you have 5 tasks in the list.
 
-Example: `find run`
+## Task Management
 
-Expected output:
+### Marking Tasks
+- **Mark as done:** `mark <index>`  
+  **Example Input:** `mark 2`  
+  **Example Output:**  
+  Nice! I've marked this task as done:  
+  [D][X] submit report (by: 15/11/2023 5pm)
 
-```
-Here are the matching tasks in your list:
-1.[T][X] run 10k
-2.[T][ ] run 5k
-3.[T][ ] charity run
-4.[D][ ] slow run (by: 5pm)
-5.[E][X] running exercise (from: 6pm to: 10pm)
-```
+- **Mark as not done:** `unmark <index>`  
+  **Example Input:** `unmark 1`  
+  **Example Output:**  
+  OK, I've marked this task as not done yet:  
+  [T][ ] buy groceries
 
-## Exiting the program
+### Deleting Tasks
+**Format:** `delete <index>`  
+**Example Input:** `delete 3`  
+**Example Output:**  
+Noted. I've removed this task:  
+[E][ ] team meeting (from: 10am to: 11am)  
+Now you have 4 tasks in the list.
 
-This feature allows users to say bye to Engineer and exit the chatbot program.
+## Task Viewing
 
-Input format: `bye`
+### List All Tasks
+**Format:** `list`  
+**Example Output:**  
+Here are the tasks in your list:  
+1.[T][ ] buy groceries  
+2.[D][X] submit report (by: 15/11/2023 5pm)  
+3.[T][ ] call mom  
+4.[E][ ] project review (from: 2pm to: 3pm)  
+5.[D][ ] pay bills (by: 20/11/2023)
 
-Example: `bye`
+### Find Tasks
+Search for tasks containing a keyword.
 
-Expected output:
+**Format:** `find <keyword>`  
+**Example Input:** `find project`  
+**Example Output:**  
+Here are the matching tasks in your list:  
+1.[E][ ] project review (from: 2pm to: 3pm)  
+2.[D][ ] project submission (by: 30/11/2023)
 
-```
-Bye. Hope to see you again soon!
-
+## Exiting the Program
+**Format:** `bye`  
+**Example Output:**  
+Bye. Hope to see you again soon!  
 Process finished with exit code 0
-```
+
+---
+
+**Note:** All dates should be in DD/MM/YYYY format and times in 12-hour format (am/pm).
